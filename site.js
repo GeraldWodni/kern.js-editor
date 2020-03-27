@@ -28,6 +28,14 @@ module.exports = {
         /* protection filters, TODO: allow overwrite per user-permission */
         var hierarchyFilters = {
             dirHideFilters: [ /(^|\/)\..*/g ],
+            dirShowFilters: [ new RegExp( '^/edit' + dirFilter, "g" ) ],
+            lockWebsite: false,
+            unlockRoot: true
+        };
+
+        /* protection filters, TODO: allow overwrite per user-permission */
+        var hierarchyFiltersTree = {
+            dirHideFilters: [ /(^|\/)\..*/g ],
             dirShowFilters: [ new RegExp( '^' + prefixPath + 'edit' + dirFilter, "g" ) ],
             lockWebsite: false,
             unlockRoot: true
@@ -45,7 +53,7 @@ module.exports = {
 
         /* render directory tree & editor */
         function renderAll( req, res, next, values ) {
-            k.hierarchy.readHierarchyTree( root(req), root(req), _.extend( {}, hierarchyFilters, {
+            k.hierarchy.readHierarchyTree( root(req), root(req), _.extend( {}, hierarchyFiltersTree, {
                 prefix: prefixPath + "edit"
             }),
             function( err, tree ) {
