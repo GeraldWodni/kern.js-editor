@@ -25,15 +25,14 @@ module.exports = {
             }, obj );
         }
 
-        /* protection filters, TODO: allow overwrite per user-permission */
         var hierarchyFilters = {
             dirHideFilters: [ /(^|\/)\..*/g ],
-            dirShowFilters: [ new RegExp( '^' + dirFilter, "g" ) ],
+            /* TODO: SECURITY FLAW: fix this */
+            //dirShowFilters: [ new RegExp( '^' + dirFilter, "g" ) ],
             lockWebsite: false,
             unlockRoot: true
         };
 
-        /* protection filters, TODO: allow overwrite per user-permission */
         var hierarchyFiltersTree = {
             dirHideFilters: [ /(^|\/)\..*/g ],
             dirShowFilters: [ new RegExp( '^' + prefixPath + 'edit' + dirFilter, "g" ) ],
