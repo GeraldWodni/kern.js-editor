@@ -61,5 +61,5 @@ block main-content
                         textarea(name="content", data-type=contentType)#editor-textarea= content
 
 append scripts
-    +script-tag("/js/ace-min/ace.js")
-    +script-tag("/js/editor.js")
+    +script-tag(`${prefixPath}/js/ace-min/ace.js`)
+    +script-tag(`${prefixPath}/js/editor.js`)

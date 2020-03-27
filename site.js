@@ -17,7 +17,9 @@ module.exports = {
         }
 
         function vals( req, obj ) {
-            return _.extend( {}, obj );
+            return _.extend( {
+                prefixPath: process.env.KERN_EDITOR_PREFIX
+            }, obj );
         }
 
         /* protection filters, TODO: allow overwrite per user-permission */
