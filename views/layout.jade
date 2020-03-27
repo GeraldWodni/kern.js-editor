@@ -1,0 +1,16 @@
+//- editor layout
+
+doctype html
+
+include mixins
+html(lang=__locale.currentRoot)
+    head
+        title Editor
+        //-+favicon("/images/favicon.ico")
+        +style('/css/index.css')
+        +style('/css/font-awesome.min.css')
+        +styles
+    body
+        #content
+            block content
+        block scripts

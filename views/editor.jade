@@ -1,0 +1,65 @@
+extends layout
+
+//- TODO: merge with media and move to mixins or a separete file.jade
+mixin directory(subTree, dirName)
+    li.directory(data-prefix=subTree.prefix,data-dirname=dirName)
+        +fa("folder-open")
+        = " " + dirName
+        form.form-inline(method="post",action=subTree.prefix + "/" + dirName)
+            span.input-group
+                input.form-control.input-xs(type="text",name="name",placeholder=__("New name"))
+                button.btn.btn-primary.btn-xs(type="submit",name="create-dir",title=__("New Folder"))
+                    +fa("plus")
+                    |  
+                    +fa("folder")
+                button.btn.btn-primary.btn-xs(type="submit",name="create-file",title=__("New file"))
+                    +fa("plus")
+                    |  
+                    +fa("file")
+            button.btn.btn-default.btn-xs(type="submit",name="delete-dir",title=__("Delete folder"))
+                +fa("trash")
+        ul
+            +dirTreeWalker( subTree )
+
+mixin dirTree(tree)
+    ul.filetree&attributes(attributes)
+        +dirTreeWalker(tree)
+
+mixin dirTreeWalker(tree)
+    each subTree, dirName in tree.dirs
+        +directory(subTree, dirName)
+    each file in tree.files
+        li.file
+            a(href=file.link)
+                +fa("file")
+                = " " + file.name
+            form.form-inline(method="post",action=file.link)
+                button.btn.btn-default.btn-xs(type="submit",name="delete-file",title=__("Delete file"))
+                    +fa("trash")
+
+block main-content
+    div.container-fluid.main-content#editor-wrapper
+        block content
+            h1
+              if showEditor
+                 = __("Edit")
+                 |  - 
+                 = filename
+              else
+                  = __("Editor")
+
+            +dirTree( tree )
+
+            if showEditor
+                div.editorWrapper
+                    +messages( messages )
+                    form(method="post")
+                        button(type="submit" name="save" value="yes").btn.btn-primary
+                            +fa("save")
+                            |  
+                            =__("Save")
+                        textarea(name="content", data-type=contentType)#editor-textarea= content
+
+append scripts
+    +script-tag("/js/ace-min/ace.js")
+    +script-tag("/js/editor.js")
