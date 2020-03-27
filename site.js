@@ -26,8 +26,7 @@ module.exports = {
 
         /* protection filters, TODO: allow overwrite per user-permission */
         var hierarchyFilters = {
-            dirHideFilters: [ /^\..*/g ],
-            fileHideFilters: [ /^\..*/g ],
+            dirHideFilters: [ /(^|\/)\..*/g ],
             lockWebsite: false,
             unlockRoot: true
         };
