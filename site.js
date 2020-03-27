@@ -8,7 +8,8 @@ var _           = require("underscore");
 
 module.exports = {
     setup: function( k ) {
-        const prefixPath = process.env.KERN_EDITOR_PREFIX
+        const dirFilter = process.env.KERN_EDITOR_DIR_FILTER;
+        const prefixPath = process.env.KERN_EDITOR_PREFIX;
 
         function root( req ) {
             if( process.env.KERN_EDITOR_ROOT ) {
@@ -27,6 +28,7 @@ module.exports = {
         /* protection filters, TODO: allow overwrite per user-permission */
         var hierarchyFilters = {
             dirHideFilters: [ /(^|\/)\..*/g ],
+            dirShowFilters: [ new RegExp( '^\/edit'+dirFilter, "g" ) ],
             lockWebsite: false,
             unlockRoot: true
         };

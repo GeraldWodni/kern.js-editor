@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     var modes = {
         jade:   "jade",
+        html:   "html",
         js:     "javascript",
         json:   "json",
         less:   "less",
