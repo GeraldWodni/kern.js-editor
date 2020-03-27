@@ -8,6 +8,8 @@ var _           = require("underscore");
 
 module.exports = {
     setup: function( k ) {
+        const prefixPath = process.env.KERN_EDITOR_PREFIX
+
         function root( req ) {
             if( process.env.KERN_EDITOR_ROOT ) {
                 console.log( "ROOT:", process.env.KERN_EDITOR_ROOT )
@@ -18,12 +20,13 @@ module.exports = {
 
         function vals( req, obj ) {
             return _.extend( {
-                prefixPath: process.env.KERN_EDITOR_PREFIX
+                prefixPath: prefixPath
             }, obj );
         }
 
         /* protection filters, TODO: allow overwrite per user-permission */
         var hierarchyFilters = {
+            fileHideFilters: [ /^\..*/g ],
             lockWebsite: false,
             unlockRoot: true
         };
@@ -41,7 +44,7 @@ module.exports = {
         /* render directory tree & editor */
         function renderAll( req, res, next, values ) {
             k.hierarchy.readHierarchyTree( root(req), root(req), _.extend( {}, hierarchyFilters, {
-                prefix: "/edit"
+                prefix: prefixPath + "edit"
             }),
             function( err, tree ) {
                 if( err ) return next( err );
