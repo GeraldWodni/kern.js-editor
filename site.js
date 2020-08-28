@@ -8,8 +8,8 @@ var _           = require("underscore");
 
 module.exports = {
     setup: function( k ) {
-        const dirFilter = process.env.KERN_EDITOR_DIR_FILTER;
-        const prefixPath = process.env.KERN_EDITOR_PREFIX;
+        const dirFilter = process.env.KERN_EDITOR_DIR_FILTER || ".*";
+        const prefixPath = process.env.KERN_EDITOR_PREFIX || "";
 
         function root( req ) {
             if( process.env.KERN_EDITOR_ROOT ) {
