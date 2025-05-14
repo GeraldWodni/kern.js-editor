@@ -102,6 +102,11 @@ module.exports = {
                             var content = req.postman.raw("content").replace(/\r\n/g, "\n");
 
                             k.hierarchy.createWriteStream( root(req), filename, { unlockRoot: true } ).end( content );
+                            if( req.headers.accept.indexOf( "application/json" ) >= 0 )
+                                return res.json( {
+                                    success: true,
+                                });
+
                             var contentType = path.parse(filename).ext.replace( /^\./, "" );
                             renderAll( req, res, next, { showEditor: true, filename: filename, contentType: contentType, content: content } );
                         }

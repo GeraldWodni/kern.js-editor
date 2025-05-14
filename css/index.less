@@ -151,10 +151,17 @@ h1 {
         font-size: 110%;
         padding: 3px 5px;
 
+        transition: background-color 0.5s;
 
         &:hover {
             cursor: pointer;
             background-color: lighten( @brand-color, 15% );
+        }
+
+        &.success {
+            color: #000;
+            background-color: #8F3;
+            transition: background-color 0.25s;
         }
     }
 
@@ -168,6 +175,10 @@ h1 {
 
     textarea {
         overflow: auto;
+    }
+
+    &.welcome {
+        padding: 1em 3em;
     }
 }
 

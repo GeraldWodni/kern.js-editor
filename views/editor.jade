@@ -59,7 +59,20 @@ block main-content
                             |  
                             =__("Save")
                         textarea(name="content", data-type=contentType)#editor-textarea= content
+            else
+                div.editorWrapper.welcome
+                    h2
+                        +fa("arrow-left")
+                        |  Select a file on the left to start editing
+                    p Some more tipps:
+                    ul
+                        li
+                            code crtl+s
+                            |  can now be used to save the current file, on success the save button will flash green.
+                        li
+                            code F1
+                            |  will show you all available shortcuts when editing (not on this page).
 
 append scripts
-    +script-tag(`${prefixPath}/js/ace-min/ace.js`)
-    +script-tag(`${prefixPath}/js/editor.js`)
+    +script-tag(`${prefixPath}js/ace-min/ace.js`)
+    +script-tag(`${prefixPath}js/editor.js`)

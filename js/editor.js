@@ -2,6 +2,7 @@
 /* (c)copyright 2017, 2020 by Gerald Wodni<gerald.wodni@gmail.com> */
 document.addEventListener("DOMContentLoaded", function(){
     var $sourceTextarea = document.getElementById('editor-textarea');
+    var $saveButton = document.querySelector(".editorWrapper form button[name='save']");
     //var height = $(window).height() - 200;
     var height = 100;
     //$sourceTextarea.insertAdjacentHTML('afterend', `<div id="editor" class="form-control" style="width: 300px;height:' + height + 'px"> </div>'`);
@@ -39,4 +40,42 @@ document.addEventListener("DOMContentLoaded", function(){
         $sourceTextarea.value = editor.getSession().getValue();
     });
 
+    editor.commands.addCommand({
+        name: "save",
+        bindKey: { win: "Ctrl-S", mac: "Command-S" },
+        exec: async function( editor ) {
+            post( location.pathname, {
+                save: "yes",
+                content: $sourceTextarea.value,
+            }, {
+                headers: {
+                    "Accept": "application/json",
+                }
+            })
+            .then( res => res.json() )
+            .then( res => {
+                if( res.success ) {
+                    $saveButton.classList.add("success");
+                    window.setTimeout( () => $saveButton.classList.remove("success"), 400 );
+                }
+            });
+
+        },
+    });
 });
+
+function post( url, data, opts = {} ) {
+    var body = ""; var separator = "";
+    Object.keys( data ).forEach( key => {
+        body += separator + encodeURIComponent(key) + "=" + encodeURIComponent( data[key] );
+        separator = "&";
+    });
+
+    return fetch( url, {
+        method: "POST",
+        headers: Object.assign( {
+            "Content-Type": "application/x-www-form-urlencoded",
+        }, opts.headers || {} ),
+        body
+    })
+}
